@@ -26,7 +26,7 @@ const store = new Vuex.Store({
             state.user = { ...user }
         },
         LOGOUT_USER (state) {
-            state.authStatus = ''
+            state.authStatus = false
             state.token = '' && localStorage.removeItem('apollo-token')
         }
     },
@@ -34,7 +34,7 @@ const store = new Vuex.Store({
         async register ({ commit, dispatch }, authDetails) {
             try {
                 const { data } = await apolloClient.mutate({ mutation: REGISTER_USER, variables: { ...authDetails } })
-                const token = JSON.stringify(data.createUser.token)
+                const token = JSON.stringify(data.registerUser.token)
                 commit('SET_TOKEN', token)
                 localStorage.setItem('apollo-token', token)
                 dispatch('setUser')

@@ -8,8 +8,8 @@ mutation login ($email: String! $password: String! ){
 }
 `
 export const REGISTER_USER = gql`
-mutation createUser($pseudo: String! $email: String! $password: String! ) {
-    createUser( pseudo: $pseudo, email: $email, password: $password) {
+mutation registerUser($pseudo: String! $email: String! $password: String! ) {
+    registerUser( pseudo: $pseudo, email: $email, password: $password) {
       token
     }
 }

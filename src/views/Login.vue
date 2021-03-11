@@ -1,14 +1,49 @@
 <template>
     <div class="auth">
-        <h3>Sign In</h3>
-        <form action="POST" @submit.prevent="loginUser">
-            <label for="email">Email Address</label>
-            <input type="email" name="email"  placeholder="yourdopeemail@something.com" v-model="authDetails.email" />
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="password" v-model="authDetails.password" />
-            <button class="auth-submit">submit</button>
-            <p class="auth-text"> Already have an account? <router-link to="/login"> Login </router-link> </p>
-        </form>
+        <div class="mt-10 sm:mt-5 mx-5 sm:mx-10 md:mx-20 lg:mx-40 xl:mx-60 2xl:mx-80">
+            <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">Sign In</h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                            Login to your account to save your preferences.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                    <form action="POST" @submit.prevent="loginUser">
+                        <div class="shadow sm:rounded-md overflow-hidden">
+                            <div class="px-4 py-5 bg-white sm:p-6">
+                                <div class="grid grid-cols-6 gap-6">
+                                    <div class="col-span-6 sm:col-span-4">
+                                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                                        <input type="email" name="email"  placeholder="yourdopeemail@something.com" v-model="authDetails.email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                                    </div>
+                                    <div class="col-span-6 sm:col-span-4">
+                                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                        <input type="password" name="password" placeholder="password" v-model="authDetails.password" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-4 py-3 bg-gray-50 sm:px-6">
+                                <div class="grid grid-cols-6 gap-6">
+                                    <div class="col-span-3">
+                                        <router-link to="/register" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-300 hover:bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-200">
+                                            Register
+                                        </router-link>
+                                    </div>
+                                    <div class="col-span-3 text-right">
+                                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Login
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -35,5 +70,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 </style>
