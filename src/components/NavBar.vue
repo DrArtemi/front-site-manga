@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen bg-gray-700">
+    <div class="w-screen flex-initial bg-gray-700">
         <div class="flex items-center justify-between h-16">
             <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">

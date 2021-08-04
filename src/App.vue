@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="h-full flex flex-col">
       <NavBar />
       <router-view />
   </div>
