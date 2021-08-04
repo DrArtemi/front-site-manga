@@ -1,4 +1,4 @@
-# front-site-manga
+# FuckJapscan
 
 ## Project setup
 ```

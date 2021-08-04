@@ -1,15 +1,16 @@
 <template>
-  <div class="flex-auto bg-gray-800">
+  <div class="flex-auto">
     <!-- Si on est connecté slider mes chapitres -->
-    <!-- Slider derniers chapitres -->
-    <!-- Slider mangas -->
-    <Slider name="Nouveaux chapitres" v-bind:chapters="chapters" type="chapter"/>
-    <!-- <ul>
-      <li v-for="manga of mangas" :key="manga.id">
-        <p>{{ manga.title }}</p>
-        <img v-bind:src="'/manga_covers/' + manga.cover_path">
-      </li>
-    </ul> -->
+    <Slider
+      name="Derniers chapitres"
+      :sliderData="chapters"
+      type="chapter"
+    />
+    <Slider
+      name="Mangas"
+      :sliderData="mangas"
+      type="manga"
+    />
   </div>
 </template>
 
