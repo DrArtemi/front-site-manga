@@ -11,6 +11,11 @@
       :sliderData="mangas"
       type="manga"
     />
+    <Slider
+      name="Mangas"
+      :sliderData="mangas"
+      type="manga"
+    />
   </div>
 </template>
 
