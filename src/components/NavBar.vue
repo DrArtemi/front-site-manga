@@ -1,6 +1,6 @@
 <template>
     <div class="w-screen flex-initial bg-gradient-to-b from-black">
-        <div class="flex items-center justify-between h-16">
+        <div class="flex items-center justify-between h-24">
             <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
                     <router-link to="/" class="text-white px-3 py-2 rounded-md text-sm font-medium self-center">
