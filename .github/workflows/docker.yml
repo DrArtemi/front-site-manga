@@ -28,3 +28,4 @@ jobs:
         with:
           push: true
           platforms: linux/amd64
+          tags: drartemi/fuckjapscan-front:latest
