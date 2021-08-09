@@ -46,7 +46,9 @@
                     />
                 </li>
             </ul>
-            <div v-if="sliderData.length == 0">PAS DE RESULTATS GROS NOOB</div>
+            <div v-if="sliderData.length == 0">
+                <NoResult />
+            </div>
         </div>
     </div>
 </template>
@@ -55,13 +57,15 @@
 import ChapterCard from './ChapterCard.vue'
 import MangaCard from './MangaCard.vue'
 import Search from './Search.vue'
+import NoResult from './NoResult.vue'
 
 export default {
     name: 'Slider',
     components: {
         ChapterCard,
         MangaCard,
-        Search
+        Search,
+        NoResult
     },
     props: [
         'name',
