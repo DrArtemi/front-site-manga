@@ -5,7 +5,9 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      borderColor: ['group-focus'],
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

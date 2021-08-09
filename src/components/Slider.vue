@@ -1,9 +1,15 @@
 <template>
     <div class="mt-12 ml-6 mr-4 overflow-hidden">
-        <h2 class="text-2xl text-gray-50 mb-4 font-medium">{{ name }}</h2>
+        <div class="flex mb-6">
+            <h2 class="text-2xl text-gray-50 font-medium">{{ name }}</h2>
+            <Search
+                class="w-48 ml-auto self-end"
+                @search="updateSearchText"
+            />
+        </div>
         <div class="relative group">
             <div
-                v-if="rendered && hasElsBefore"
+                v-if="rendered && hasElsBefore && sliderData.length > 0"
                 class="absolute flex items-center top-0 left-0 w-8 h-full bg-black opacity-0 z-10 cursor-pointer group-hover:opacity-80 transition-all duration-300 ease-in-out"
                 @click="page++"
             >
@@ -12,7 +18,7 @@
                 </svg>
             </div>
             <div
-                v-if="rendered && hasElsAfter"
+                v-if="rendered && hasElsAfter && sliderData.length > 0"
                 class="absolute flex items-center top-0 right-0 w-8 h-full bg-black opacity-0 z-10 cursor-pointer group-hover:opacity-80 transition-all duration-300 ease-in-out"
                 @click="page--"
             >
@@ -21,6 +27,7 @@
                 </svg>
             </div>
             <ul
+                v-if="sliderData.length > 0"
                 class="flex flex-row relative transition-all duration-1000 ease-in-out"
                 :style="{'transform': `translateX(${page}00%)`}"
             >
@@ -39,6 +46,7 @@
                     />
                 </li>
             </ul>
+            <div v-if="sliderData.length == 0">PAS DE RESULTATS GROS NOOB</div>
         </div>
     </div>
 </template>
@@ -46,12 +54,14 @@
 <script>
 import ChapterCard from './ChapterCard.vue'
 import MangaCard from './MangaCard.vue'
+import Search from './Search.vue'
 
 export default {
     name: 'Slider',
     components: {
         ChapterCard,
         MangaCard,
+        Search
     },
     props: [
         'name',
@@ -78,14 +88,19 @@ export default {
         checkSlider: function() {
             let lastEl = this.$el.getElementsByClassName('last')[0];
             let firstEl = this.$el.getElementsByClassName('first')[0];
-            this.hasElsAfter = !this.isScrolledIntoView(lastEl);
-            this.hasElsBefore = !this.isScrolledIntoView(firstEl);
+            if (lastEl !== undefined)
+                this.hasElsAfter = !this.isScrolledIntoView(lastEl);
+            if (firstEl !== undefined)
+                this.hasElsBefore = !this.isScrolledIntoView(firstEl);
         },
         isScrolledIntoView: function(el) {
             let rect = el.getBoundingClientRect();
             let elemLeft = rect.left;
             let elemRight = rect.right;
             return (elemLeft >= 0) && (elemRight <= window.innerWidth);
+        },
+        updateSearchText: function(searchText) {
+            this.$emit('search', searchText);
         }
     },
     mounted: function() {
