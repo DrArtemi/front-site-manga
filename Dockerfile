@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY ./ .
-ENV VUE_APP_GRAPHQL_HTTP=http://178.32.217.205:8000/
+ENV VUE_APP_GRAPHQL_HTTP=http://178.32.217.205:8443/
 RUN npm run build
 
 FROM nginx as production-stage
