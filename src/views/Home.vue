@@ -5,11 +5,13 @@
       name="Derniers chapitres"
       :sliderData="chapters"
       type="chapter"
+      @search="updateSearchTextChapter"
     />
     <Slider
       name="Mangas"
       :sliderData="mangas"
       type="manga"
+      @search="updateSearchTextManga"
     />
   </div>
 </template>
@@ -27,33 +29,56 @@ export default {
     return {
       mangas: '',
       chapters: '',
-      static_url: process.env.VUE_APP_MANGA_IMAGE_PATH
+      searchTextChapter: '',
+      searchTextManga: ''
+    }
+  },
+  methods: {
+    updateSearchTextChapter: function(searchText) {
+      this.searchTextChapter = searchText;
+    },
+    updateSearchTextManga: function(searchText) {
+      this.searchTextManga = searchText;
     }
   },
   apollo: {
-    mangas: gql`query {
-      mangas: allMangas {
-        id
-        title
-        team
-        cover_path
-      }
-    }`,
-    chapters: gql`query {
-      chapters: allChapters(first: 50) {
-        id
-        title
-        number
-        url
-        date
-        manga {
+    mangas: {
+      query: gql`query mangas($searchText: String!) {
+        mangas: allMangas(searchText: $searchText) {
           id
           title
           team
           cover_path
         }
+      }`,
+      variables() {
+        return {
+          searchText: this.searchTextManga
+        };
       }
-    }`,
+    },
+    chapters: {
+      query: gql`query chapters($searchText: String!) {
+        chapters: allChapters(first: 50, searchText: $searchText) {
+          id
+          title
+          number
+          url
+          date
+          manga {
+            id
+            title
+            team
+            cover_path
+          }
+        }
+      }`,
+      variables() {
+        return {
+          searchText: this.searchTextChapter
+        };
+      }
+    }
   }
 }
 
