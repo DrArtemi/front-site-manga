@@ -7,10 +7,10 @@
                 @search="updateSearchText"
             />
         </div>
-        <div class="relative group overflow-x-auto xl:overflow-hidden">
+        <div class="relative group overflow-x-auto 2xl:overflow-hidden">
             <div
                 v-if="rendered && hasElsBefore && sliderData.length > 0"
-                class="hidden xl:flex absolute items-center top-0 left-0 w-8 h-full bg-black opacity-0 z-10 cursor-pointer group-hover:opacity-80 transition-all duration-300 ease-in-out"
+                class="hidden 2xl:flex absolute items-center top-0 left-0 w-8 h-full bg-black opacity-0 z-10 cursor-pointer group-hover:opacity-80 transition-all duration-300 ease-in-out"
                 @click="page++"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="text-white block h-6 w-6 m-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -19,7 +19,7 @@
             </div>
             <div
                 v-if="rendered && hasElsAfter && sliderData.length > 0"
-                class="hidden xl:flex absolute flex items-center top-0 right-0 w-8 h-full bg-black opacity-0 z-10 cursor-pointer group-hover:opacity-80 transition-all duration-300 ease-in-out"
+                class="hidden 2xl:flex absolute flex items-center top-0 right-0 w-8 h-full bg-black opacity-0 z-10 cursor-pointer group-hover:opacity-80 transition-all duration-300 ease-in-out"
                 @click="page--"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" class="text-white block h-6 w-6 m-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
