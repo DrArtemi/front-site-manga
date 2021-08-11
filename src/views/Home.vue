@@ -2,12 +2,14 @@
   <div class="flex-auto">
     <!-- Si on est connecté slider mes chapitres -->
     <Slider
-      name="Derniers chapitres"
+      class="mt-4 md:mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
+      name="Chapitres"
       :sliderData="chapters"
       type="chapter"
       @search="updateSearchTextChapter"
     />
     <Slider
+      class="mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
       name="Mangas"
       :sliderData="mangas"
       type="manga"
