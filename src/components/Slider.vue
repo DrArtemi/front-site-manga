@@ -3,7 +3,7 @@
         <div class="flex mb-4">
             <h2 class="text-2xl text-gray-50 font-medium">{{ name }}</h2>
             <Search
-                class="w-32 md:w-40 ml-auto self-end"
+                class="w-32 md:w-40 xl:w-48 ml-auto self-end"
                 @search="updateSearchText"
             />
         </div>
