@@ -46,7 +46,7 @@ export default {
   apollo: {
     mangas: {
       query: gql`query mangas($searchText: String!) {
-        mangas: allMangas(searchText: $searchText) {
+        mangas: allMangas(first: 50, searchText: $searchText) {
           id
           title
           team
