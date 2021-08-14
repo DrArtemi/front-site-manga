@@ -69,7 +69,7 @@ export default {
   apollo: {
     favorites: {
       query: gql`query favorites($mangaIds: [Int!]!, $searchText: String!) {
-        favorites: userChapters(mangaIds: $mangaIds, searchText: $searchText) {
+        favorites: userChapters(first: 50, mangaIds: $mangaIds, searchText: $searchText) {
           id
           title
           number
