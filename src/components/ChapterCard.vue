@@ -15,8 +15,8 @@
         </div>
         <div class="flex ml-2 mt-auto">
             <div class="mb-1 self-end">
-                <h3 class="text-base font-bold leading-4 text-white">{{ chapter.manga.title }}</h3>
-                <span class="text-sm text-white">Ch. {{ chapter.number }}</span>
+                <h3 class="text-sm xl:text-base font-bold leading-4 text-white">{{ chapter.manga.title }}</h3>
+                <span class="text-xs xl:text-sm text-white">Ch. {{ chapter.number }}</span>
             </div>
             <LikeButton
                 v-if="authStatus"

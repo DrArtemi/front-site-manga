@@ -9,7 +9,8 @@
       @search="updateSearchTextFavorite"
     />
     <Slider
-      class="mt-2 mb-4 md:mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
+      class="mb-4 md:mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
+      :class="{ 'mt-8': authStatus && favorites, 'mt-2': !authStatus || !favorites }"
       name="Chapitres"
       :sliderData="chapters"
       type="chapter"

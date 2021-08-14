@@ -8,7 +8,7 @@
                 ]"
     >
         <div class="flex ml-2 mt-auto">
-            <h3 class="text-base font-bold text-white mb-1 self-end">{{ manga.title }}</h3>
+            <h3 class="text-sm xl:text-base font-bold text-white mb-1 self-end">{{ manga.title }}</h3>
             <LikeButton
                 v-if="authStatus"
                 class="ml-auto self-end"
