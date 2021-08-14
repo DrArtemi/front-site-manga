@@ -15,7 +15,10 @@
     "vue-apollo": "^3.0.7",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2",
-    "vuex-persistedstate": "^4.0.0"
+    "vuex-persistedstate": "^4.0.0",
+    "node-sass": "^5.0.0",
+    "postcss": "^7.0.35",
+    "sass-loader": "^10.0.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.0.3",
@@ -27,9 +30,6 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "graphql-tag": "^2.9.0",
-    "node-sass": "^5.0.0",
-    "postcss": "^7.0.35",
-    "sass-loader": "^10.0.5",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
     "vue-cli-plugin-apollo": "~0.22.2",
     "vue-template-compiler": "^2.6.11"
