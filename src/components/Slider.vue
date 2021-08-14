@@ -110,6 +110,11 @@ export default {
         }
     },
     mounted: function() {
+        if (this.sliderData) {
+            this.$nextTick(function() {
+                this.checkSlider();
+            });
+        }
         this.rendered = true
     }
 }
