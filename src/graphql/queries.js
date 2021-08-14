@@ -7,17 +7,9 @@ export const LOGGED_IN_USER = gql`
       id
       pseudo
       email
-    }
-  }
-`
-
-// MANGAS
-export const CHAPTERS = gql`
-  query {
-    me {
-      id
-      pseudo
-      email
+      mangas {
+        id
+      }
     }
   }
 `

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+import * as Cookies from 'js-cookie';
 import { apolloClient } from '../vue-apollo'
 import { LOGGED_IN_USER } from '../graphql/queries'
 import { LOGIN_USER, REGISTER_USER } from '../graphql/mutations'
@@ -28,6 +30,7 @@ const store = new Vuex.Store({
         LOGOUT_USER (state) {
             state.authStatus = false
             state.token = '' && localStorage.removeItem('apollo-token')
+            state.user = {}
         }
     },
     actions: {
@@ -54,13 +57,28 @@ const store = new Vuex.Store({
             }
         },
         async setUser ({ commit }) {
-            const { data } = await apolloClient.query({ query: LOGGED_IN_USER })
+            const { data } = await apolloClient.query({ query: LOGGED_IN_USER, fetchPolicy: 'network-only' })
             commit('LOGIN_USER', data.me)
         },
         async logOut ({ commit, dispatch }) {
             commit('LOGOUT_USER')
         }
-    }
+    },
+    plugins: [
+        createPersistedState({
+          getState: (key) => {
+                let result = Cookies.get(key);
+                if (result) {
+                    return JSON.parse(Cookies.get(key));
+                } else {
+                    return {}
+                }
+          },
+          setState: (key, state) => {
+              return Cookies.set(key, JSON.stringify(state), { expires: 7, secure: true })
+          }
+        })
+    ]
 })
 
 export default store
