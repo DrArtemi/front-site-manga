@@ -11,7 +11,7 @@
     <Slider
       class="mb-4 md:mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
       :class="{ 'mt-8': authStatus && favorites, 'mt-2': !authStatus || !favorites }"
-      name="Chapitres"
+      :name="this.authStatus ? 'Autres' : 'Chapitres'"
       :sliderData="chapters"
       type="chapter"
       @search="updateSearchTextChapter"
@@ -108,8 +108,8 @@ export default {
       }
     },
     chapters: {
-      query: gql`query chapters($searchText: String!) {
-        chapters: allChapters(first: 50, searchText: $searchText) {
+      query: gql`query chapters($mangaIds: [Int!]!, $searchText: String!) {
+        chapters: allChapters(first: 50, mangaIds: $mangaIds, searchText: $searchText) {
           id
           title
           number
@@ -125,6 +125,7 @@ export default {
       }`,
       variables() {
         return {
+          mangaIds: this.mangaIds,
           searchText: this.searchTextChapter
         };
       }
