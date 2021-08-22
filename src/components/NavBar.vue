@@ -1,5 +1,5 @@
 <template>
-    <div class="w-screen flex-initial bg-gradient-to-b from-black">
+    <div class="w-screen max-w-full flex-initial bg-gradient-to-b from-black">
         <div class="flex items-center justify-between h-24">
             <div>
                 <div class="ml-4 lg:ml-8 flex items-baseline space-x-4">
