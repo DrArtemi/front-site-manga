@@ -8,7 +8,7 @@
     >
         <div
             v-if="manga.team.length > 1"
-            class="team-links-container flex flex-col flex-1 hover:bg-black hover:bg-opacity-40"
+            class="flex flex-col flex-1 hover:bg-black hover:bg-opacity-40"
         >
             <div class="team-links hidden flex-col flex-1 items-center overflow-auto py-1">
                 <a

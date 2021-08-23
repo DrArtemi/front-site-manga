@@ -8,7 +8,7 @@
     >
         <div
             v-if="chapter.manga.team.length > 1"
-            class="team-links-container flex flex-col flex-1 hover:bg-black hover:bg-opacity-40 max-h-full"
+            class="flex flex-col flex-1 hover:bg-black hover:bg-opacity-40 max-h-full"
         >
             <div
                 v-if="(new Date - new Date(chapter.date)) < DAY"
@@ -43,7 +43,7 @@
         </div>
         <a v-else
             :href="chapter.url[0]" target="_blank"
-            class="flex flex-1"
+            class="flex flex-col flex-1"
         >
             <div
                 v-if="(new Date - new Date(chapter.date)) < DAY"
