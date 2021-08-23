@@ -96,7 +96,7 @@ export default {
 <style scoped>
 
 .chapter-card:hover .team-links,
-.chapter-card:active .team-links {
+.chapter-card:focus .team-links {
     display: flex;
 }
 
