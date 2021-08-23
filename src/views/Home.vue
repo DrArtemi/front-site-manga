@@ -67,6 +67,11 @@ export default {
       }
     }
   },
+  watch: {
+    favorites : function(val) {
+
+    }
+  },
   apollo: {
     favorites: {
       query: gql`query favorites($mangaIds: [Int!]!, $searchText: String!) {
@@ -89,6 +94,15 @@ export default {
           mangaIds: this.mangaIds,
           searchText: this.searchTextFavorite
         };
+      },
+      update: function(data) {
+        data['favorites'].forEach(function(chapter) {
+          if (typeof chapter.manga.team === 'string' || chapter.manga.team instanceof String)
+            chapter.manga.team = chapter.manga.team.split(';');
+          if (typeof chapter.url === 'string' || chapter.url instanceof String)
+            chapter.url = chapter.url.split(';');
+        });
+        return data['favorites'];
       }
     },
     mangas: {
@@ -105,6 +119,15 @@ export default {
         return {
           searchText: this.searchTextManga
         };
+      },
+      update: function(data) {
+        data['mangas'].forEach(function(manga) {
+          if (typeof manga.team === 'string' || manga.team instanceof String)
+            manga.team = manga.team.split(';');
+          if (typeof manga.url === 'string' || manga.url instanceof String)
+            manga.url = manga.url.split(';');
+        });
+        return data['mangas'];
       }
     },
     chapters: {
@@ -128,6 +151,15 @@ export default {
           mangaIds: this.mangaIds,
           searchText: this.searchTextChapter
         };
+      },
+      update: function(data) {
+        data['chapters'].forEach(function(chapter) {
+          if (typeof chapter.manga.team === 'string' || chapter.manga.team instanceof String)
+            chapter.manga.team = chapter.manga.team.split(';');
+          if (typeof chapter.url === 'string' || chapter.url instanceof String)
+            chapter.url = chapter.url.split(';');
+        });
+        return data['chapters'];
       }
     }
   }
