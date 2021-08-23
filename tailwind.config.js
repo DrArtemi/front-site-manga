@@ -7,6 +7,7 @@ module.exports = {
   variants: {
     extend: {
       borderColor: ['group-focus'],
+      display: ["group-hover"],
     },
   },
   plugins: [
