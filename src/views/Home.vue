@@ -1,5 +1,10 @@
 <template>
   <div class="flex-auto">
+    <Message
+      v-if="!authStatus"
+      class="mt-2 mb-4 md:mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
+      message="Connecte toi pour avoir accès aux favoris."
+    />
     <Slider
       v-if="authStatus && favorites"
       class="mt-2 mb-4 md:mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
@@ -30,11 +35,13 @@
 import { mapGetters } from 'vuex'
 import gql from 'graphql-tag'
 import Slider from '../components/Slider.vue'
+import Message from '../components/Message.vue'
 
 export default {
   name: 'Home',
   components: {
     Slider,
+    Message
   },
   data() {
     return {
