@@ -9,6 +9,8 @@
         <div
             v-if="chapter.manga.team.length > 1"
             class="flex flex-col flex-1 hover:bg-black hover:bg-opacity-40 max-h-full"
+            :class="{ 'bg-black': this.teamsClicked, 'bg-opacity-40': this.teamsClicked }"
+            v-on:click="toggleTeams"
         >
             <div
                 v-if="(new Date - new Date(chapter.date)) < DAY"
@@ -16,12 +18,15 @@
             >
                 Aujourd'hui
             </div>
-            <div class="team-links hidden flex-col flex-1 items-center overflow-auto py-1">
+            <div
+                class="team-links flex-col flex-1 items-center overflow-auto py-1"
+                :class="{ 'flex': this.teamsClicked, 'hidden': !this.teamsClicked }"
+            >
                 <a
                     v-for="(team, idx) in chapter.manga.team"
                     :key="team"
                     :href="chapter.url[idx]" target="_blank"
-                    class="text-white bg-black hover:bg-opacity-100 bg-opacity-90 w-4/5 mb-1 p-2 rounded text-center text-sm"
+                    class="text-white bg-black hover:bg-opacity-100 bg-opacity-90 w-4/5 mb-1 p-1 md:p-2 rounded text-center text-sm"
                     :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == chapter.manga.team.length - 1}"
                 >
                     {{ team }}
@@ -83,11 +88,17 @@ export default {
     ],
     data() {
         return {
-            DAY: 86400000
+            DAY: 86400000,
+            teamsClicked: false
         }
     },
     computed: {
         ...mapGetters(['authStatus']),
+    },
+    methods: {
+        toggleTeams: function() {
+            this.teamsClicked = !this.teamsClicked;
+        }
     }
 }
 
@@ -98,12 +109,5 @@ export default {
 .chapter-card:hover .team-links {
     display: flex;
 }
-
-@media (hover: none) {
-    .manga-card .team-links {
-        display: flex;
-    }
-}
-
 
 </style>

@@ -9,8 +9,13 @@
         <div
             v-if="manga.team.length > 1"
             class="flex flex-col flex-1 hover:bg-black hover:bg-opacity-40"
+            :class="{ 'bg-black': this.teamsClicked, 'bg-opacity-40': this.teamsClicked }"
+            v-on:click="toggleTeams"
         >
-            <div class="team-links hidden flex-col flex-1 items-center overflow-auto py-1">
+            <div 
+                class="team-links flex-col flex-1 items-center overflow-auto py-1"
+                :class="{ 'flex': this.teamsClicked, 'hidden': !this.teamsClicked }"
+            >
                 <a
                     v-for="(team, idx) in manga.team"
                     :key="team"
@@ -63,12 +68,17 @@ export default {
         'manga',
         'index'
     ],
+    data() {
+        return {
+            teamsClicked: false
+        }
+    },
     computed: {
         ...mapGetters(['authStatus']),
     },
     methods: {
-        isArray: function(a) {
-            return (!!a) && (a.constructor === Array);
+        toggleTeams: function() {
+            this.teamsClicked = !this.teamsClicked;
         }
     }
 }
@@ -79,12 +89,6 @@ export default {
 
 .manga-card:hover .team-links {
     display: flex;
-}
-
-@media (hover: none) {
-    .manga-card .team-links {
-        display: flex;
-    }
 }
 
 </style>
