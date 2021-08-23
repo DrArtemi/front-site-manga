@@ -77,9 +77,14 @@ export default {
 
 <style scoped>
 
-.manga-card:hover .team-links,
-.manga-card:focus .team-links {
+.manga-card:hover .team-links {
     display: flex;
+}
+
+@media (hover: none) {
+    .manga-card .team-links {
+        display: flex;
+    }
 }
 
 </style>

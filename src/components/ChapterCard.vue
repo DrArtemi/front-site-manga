@@ -95,9 +95,15 @@ export default {
 
 <style scoped>
 
-.chapter-card:hover .team-links,
-.chapter-card:focus .team-links {
+.chapter-card:hover .team-links {
     display: flex;
 }
+
+@media (hover: none) {
+    .manga-card .team-links {
+        display: flex;
+    }
+}
+
 
 </style>
