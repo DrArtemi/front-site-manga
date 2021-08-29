@@ -17,11 +17,37 @@
                                 <div class="grid grid-cols-6 gap-6">
                                     <div class="col-span-6 sm:col-span-4">
                                         <label for="email" class="block text-sm font-medium text-gray-200">Adresse email</label>
-                                        <input type="email" name="email"  placeholder="exemple@email.com" v-model="authDetails.email" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                                        <input 
+                                            type="email"
+                                            name="email" 
+                                            placeholder="exemple@email.com"
+                                            v-model="authDetails.email"
+                                            class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                            :class="{ 'border-red-500': emailFailure !== '' }"
+                                        />
+                                        <p
+                                            v-if="emailFailure !== ''"
+                                            class="text-red-500 m-0"
+                                        >
+                                            {{ emailFailure }}
+                                        </p>
                                     </div>
                                     <div class="col-span-6 sm:col-span-4">
                                         <label for="password" class="block text-sm font-medium text-gray-200">Mot de passe</label>
-                                        <input type="password" name="password" placeholder="mot de passe" v-model="authDetails.password" class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                                        <input 
+                                            type="password"
+                                            name="password"
+                                            placeholder="mot de passe"
+                                            v-model="authDetails.password"
+                                            class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                            :class="{ 'border-red-500': passwordFailure !== '' }"
+                                        />
+                                        <p
+                                            v-if="passwordFailure !== ''"
+                                            class="text-red-500 m-0"
+                                        >
+                                            {{ passwordFailure }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -57,14 +83,31 @@ export default {
             authDetails: {
                 email: '',
                 password: ''
-            }
+            },
+            emailFailure: '',
+            passwordFailure: '',
         }
     },
     methods: {
         ...mapActions(['login']),
 
         loginUser: function () {
-            this.login(this.authDetails).then(() => this.$router.push('/'))
+            var self = this;
+            this.emailFailure = '';
+            this.passwordFailure = '';
+            this.login(this.authDetails).then(function(res) {
+                if (res.status === 'success')
+                    self.$router.push('/');
+                else {
+                    let failRes = res.message.split(':');
+                    if (failRes.length == 2) {
+                        if (failRes[0] === 'mail')
+                            self.emailFailure = failRes[1];
+                        else if (failRes[0] === 'password')
+                            self.passwordFailure = failRes[1];
+                    }
+                }
+            });
         }
     }
 }

@@ -37,10 +37,13 @@ const store = new Vuex.Store({
         async register ({ commit, dispatch }, authDetails) {
             try {
                 const { data } = await apolloClient.mutate({ mutation: REGISTER_USER, variables: { ...authDetails } })
-                const token = JSON.stringify(data.registerUser.token)
-                commit('SET_TOKEN', token)
-                localStorage.setItem('apollo-token', token)
-                dispatch('setUser')
+                if (data.registerUser.status === "success") {
+                    const token = JSON.stringify(data.registerUser.token)
+                    commit('SET_TOKEN', token)
+                    localStorage.setItem('apollo-token', token)
+                    dispatch('setUser')
+                }
+                return data.registerUser;
             } catch (e) {
                 console.log(e)
             }
@@ -48,10 +51,13 @@ const store = new Vuex.Store({
         async login ({ commit, dispatch }, authDetails) {
             try {
                 const { data } = await apolloClient.mutate({ mutation: LOGIN_USER, variables: { ...authDetails } })
-                const token = JSON.stringify(data.login.token)
-                commit('SET_TOKEN', token)
-                localStorage.setItem('apollo-token', token)
-                dispatch('setUser')
+                if (data.login.status === "success") {
+                    const token = JSON.stringify(data.login.token)
+                    commit('SET_TOKEN', token)
+                    localStorage.setItem('apollo-token', token)
+                    dispatch('setUser')
+                }
+                return data.login;
             } catch (e) {
                 console.log(e)
             }
