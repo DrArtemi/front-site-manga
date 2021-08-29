@@ -7,7 +7,7 @@
                 ]"
     >
         <div
-            v-if="chapter.manga.team.length > 1"
+            v-if="chapter.url.length > 1"
             class="flex flex-col flex-1 hover:bg-black hover:bg-opacity-40 max-h-full"
             :class="{ 'bg-black': this.teamsClicked, 'bg-opacity-40': this.teamsClicked }"
             v-on:click="toggleTeams"
@@ -23,13 +23,13 @@
                 :class="{ 'flex': this.teamsClicked, 'hidden': !this.teamsClicked }"
             >
                 <a
-                    v-for="(team, idx) in chapter.manga.team"
-                    :key="team"
-                    :href="chapter.url[idx]" target="_blank"
+                    v-for="(url, idx) in chapter.url"
+                    :key="chapter.manga.team[idx]"
+                    :href="url" target="_blank"
                     class="text-white bg-black hover:bg-opacity-100 bg-opacity-90 w-4/5 mb-1 p-1 md:p-2 rounded text-center text-sm"
-                    :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == chapter.manga.team.length - 1}"
+                    :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == chapter.url.length - 1}"
                 >
-                    {{ team }}
+                    {{ chapter.manga.team[idx] }}
                 </a>
             </div>
             <div class="flex ml-2 mt-auto">
