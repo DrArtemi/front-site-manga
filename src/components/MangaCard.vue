@@ -7,7 +7,7 @@
                 ]"
     >
         <div
-            v-if="manga.team.length > 1"
+            v-if="manga.url.length > 1"
             class="flex flex-col flex-1 hover:bg-black hover:bg-opacity-40"
             :class="{ 'bg-black': this.teamsClicked, 'bg-opacity-40': this.teamsClicked }"
             v-on:click="toggleTeams"
@@ -17,13 +17,17 @@
                 :class="{ 'flex': this.teamsClicked, 'hidden': !this.teamsClicked }"
             >
                 <a
-                    v-for="(team, idx) in manga.team"
-                    :key="team"
+                    v-for="(url, idx) in manga.url"
+                    :key="getTeamFromUrl(manga.teams, url)"
                     :href="manga.url[idx]" target="_blank"
                     class="text-white bg-black hover:bg-opacity-100 bg-opacity-90 w-4/5 mb-1 p-2 rounded text-center text-sm"
-                    :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == manga.team.length - 1}"
+                    :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == manga.url.length - 1}"
                 >
-                    {{ team }}
+                    <flag
+                        :iso="getLangFromUrl(manga.teams, manga.url[0])"
+                        class="rounded-full mr-1"
+                    />
+                    {{ getTeamFromUrl(manga.teams, url) }}
                 </a>
             </div>
             <div class="flex ml-2 mt-auto">
@@ -39,8 +43,12 @@
         </div>
         <a v-else
             :href="manga.url[0]" target="_blank"
-            class="flex flex-1"
+            class="flex flex-1 flex-col"
         >
+            <flag
+                :iso="getLangFromUrl(manga.teams, manga.url[0])"
+                class="rounded-full self-start m-1"
+            />
             <div class="flex ml-2 mt-auto">
                 <h3 class="text-sm xl:text-base font-bold text-white mb-1 self-end">{{ manga.title }}</h3>
                 <LikeButton
@@ -56,6 +64,7 @@
 </template>
 
 <script>
+import { parseDomain, fromUrl } from 'parse-domain';
 import { mapGetters } from 'vuex'
 import LikeButton from '../components/LikeButton.vue'
 
@@ -79,6 +88,26 @@ export default {
     methods: {
         toggleTeams: function() {
             this.teamsClicked = !this.teamsClicked;
+        },
+        getTeamFromUrl: function(teams, url) {
+            let idx = teams.findIndex(function(team) {
+                let domain = parseDomain(fromUrl(team.url));
+                let cleaned_domain = domain.domain + '.' + domain.topLevelDomains.join('.');
+                return url.includes(cleaned_domain);
+            });
+            if (idx === -1)
+                return '';
+            return teams[idx].name;
+        },
+        getLangFromUrl: function(teams, url) {
+            let idx = teams.findIndex(function(team) {
+                let domain = parseDomain(fromUrl(team.url));
+                let cleaned_domain = domain.domain + '.' + domain.topLevelDomains.join('.');
+                return url.includes(cleaned_domain);
+            });
+            if (idx === -1)
+                return '';
+            return teams[idx].langage;
         }
     }
 }

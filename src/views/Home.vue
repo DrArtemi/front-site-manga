@@ -11,16 +11,22 @@
       message="Connecte toi pour avoir accès aux favoris."
       color="border-blue-400"
     />
+    <Settings
+      class="mt-2 md:mt-8 ml-2 lg:ml-4"
+      :teams="teams"
+      @langages="updateSelectedLangages"
+      @teams="updateSelectedTeams"
+    />
     <Slider
       v-if="authStatus && favorites"
-      class="mt-2 mb-4 md:mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
+      class="mt-2 mb-4 md:mt-4 ml-2 lg:ml-4 mr-2 lg:mr-4"
       name="Favoris"
       :sliderData="favorites"
       type="chapter"
       @search="updateSearchTextFavorite"
     />
     <Slider
-      class="mb-4 md:mt-8 ml-2 lg:ml-4 mr-2 lg:mr-4"
+      class="mb-4 md:mt-4 ml-2 lg:ml-4 mr-2 lg:mr-4"
       :class="{ 'mt-8': authStatus && favorites, 'mt-2': !authStatus || !favorites }"
       :name="this.authStatus ? 'Autres' : 'Chapitres'"
       :sliderData="chapters"
@@ -42,12 +48,14 @@ import { mapGetters } from 'vuex'
 import gql from 'graphql-tag'
 import Slider from '../components/Slider.vue'
 import Message from '../components/Message.vue'
+import Settings from '../components/Settings.vue'
 
 export default {
   name: 'Home',
   components: {
     Slider,
-    Message
+    Message,
+    Settings
   },
   data() {
     return {
@@ -55,7 +63,9 @@ export default {
       chapters: '',
       searchTextChapter: '',
       searchTextManga: '',
-      searchTextFavorite: ''
+      searchTextFavorite: '',
+      selectedLangages: [],
+      selectedTeams: []
     }
   },
   methods: {
@@ -67,6 +77,12 @@ export default {
     },
     updateSearchTextFavorite: function(searchText) {
       this.searchTextFavorite = searchText;
+    },
+    updateSelectedLangages: function(langages) {
+      this.selectedLangages = langages;
+    },
+    updateSelectedTeams: function(teams) {
+      this.selectedTeams = teams;
     }
   },
   computed: {
@@ -80,15 +96,25 @@ export default {
       }
     }
   },
-  watch: {
-    favorites : function(val) {
-
-    }
-  },
   apollo: {
+    teams: {
+      query: gql`query teams($selectedLangages: [String]) {
+        teams: allTeams(langage: $selectedLangages) {
+          id
+          name
+          langage
+          url
+        }
+      }`,
+      variables() {
+        return {
+          selectedLangages: this.selectedLangages,
+        };
+      },
+    },
     favorites: {
-      query: gql`query favorites($mangaIds: [Int!]!, $searchText: String!) {
-        favorites: userChapters(first: 50, mangaIds: $mangaIds, searchText: $searchText) {
+      query: gql`query favorites($mangaIds: [Int!]!, $searchText: String!, $selectedLangages: [String], $selectedTeams: [String]) {
+        favorites: userChapters(first: 50, mangaIds: $mangaIds, searchText: $searchText, langage: $selectedLangages, team: $selectedTeams) {
           id
           title
           number
@@ -97,21 +123,26 @@ export default {
           manga {
             id
             title
-            team
             cover_path
+          }
+          teams {
+            id
+            name
+            langage
+            url
           }
         }
       }`,
       variables() {
         return {
           mangaIds: this.mangaIds,
-          searchText: this.searchTextFavorite
+          searchText: this.searchTextFavorite,
+          selectedLangages: this.selectedLangages,
+          selectedTeams: this.selectedTeams
         };
       },
       update: function(data) {
         data['favorites'].forEach(function(chapter) {
-          if (typeof chapter.manga.team === 'string' || chapter.manga.team instanceof String)
-            chapter.manga.team = chapter.manga.team.split(';');
           if (typeof chapter.url === 'string' || chapter.url instanceof String)
             chapter.url = chapter.url.split(';');
         });
@@ -119,24 +150,29 @@ export default {
       }
     },
     mangas: {
-      query: gql`query mangas($searchText: String!) {
-        mangas: allMangas(first: 50, searchText: $searchText) {
+      query: gql`query mangas($searchText: String!, $selectedLangages: [String], $selectedTeams: [String]) {
+        mangas: allMangas(first: 50, searchText: $searchText, langage: $selectedLangages, team: $selectedTeams) {
           id
           title
-          team
           url
           cover_path
+          teams {
+            id
+            name
+            langage
+            url
+          }
         }
       }`,
       variables() {
         return {
-          searchText: this.searchTextManga
+          searchText: this.searchTextManga,
+          selectedLangages: this.selectedLangages,
+          selectedTeams: this.selectedTeams
         };
       },
       update: function(data) {
         data['mangas'].forEach(function(manga) {
-          if (typeof manga.team === 'string' || manga.team instanceof String)
-            manga.team = manga.team.split(';');
           if (typeof manga.url === 'string' || manga.url instanceof String)
             manga.url = manga.url.split(';');
         });
@@ -144,8 +180,8 @@ export default {
       }
     },
     chapters: {
-      query: gql`query chapters($mangaIds: [Int!]!, $searchText: String!) {
-        chapters: allChapters(first: 50, mangaIds: $mangaIds, searchText: $searchText) {
+      query: gql`query chapters($mangaIds: [Int!]!, $searchText: String!, $selectedLangages: [String], $selectedTeams: [String]) {
+        chapters: allChapters(first: 50, mangaIds: $mangaIds, searchText: $searchText, langage: $selectedLangages, team: $selectedTeams) {
           id
           title
           number
@@ -154,21 +190,26 @@ export default {
           manga {
             id
             title
-            team
             cover_path
+          }
+          teams {
+            id
+            name
+            langage
+            url
           }
         }
       }`,
       variables() {
         return {
           mangaIds: this.mangaIds,
-          searchText: this.searchTextChapter
+          searchText: this.searchTextChapter,
+          selectedLangages: this.selectedLangages,
+          selectedTeams: this.selectedTeams
         };
       },
       update: function(data) {
         data['chapters'].forEach(function(chapter) {
-          if (typeof chapter.manga.team === 'string' || chapter.manga.team instanceof String)
-            chapter.manga.team = chapter.manga.team.split(';');
           if (typeof chapter.url === 'string' || chapter.url instanceof String)
             chapter.url = chapter.url.split(';');
         });
