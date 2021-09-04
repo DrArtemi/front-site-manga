@@ -24,12 +24,16 @@
             >
                 <a
                     v-for="(url, idx) in chapter.url"
-                    :key="chapter.manga.team[idx]"
+                    :key="getTeamFromUrl(chapter.teams, url)"
                     :href="url" target="_blank"
                     class="text-white bg-black hover:bg-opacity-100 bg-opacity-90 w-4/5 mb-1 p-1 md:p-2 rounded text-center text-sm"
                     :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == chapter.url.length - 1}"
                 >
-                    {{ chapter.manga.team[idx] }}
+                    <flag
+                        :iso="getLangFromUrl(chapter.teams, chapter.url[0])"
+                        class="rounded-full mr-1"
+                    />
+                    {{ getTeamFromUrl(chapter.teams, url) }}
                 </a>
             </div>
             <div class="flex ml-2 mt-auto">
@@ -50,11 +54,17 @@
             :href="chapter.url[0]" target="_blank"
             class="flex flex-col flex-1"
         >
-            <div
-                v-if="(new Date - new Date(chapter.date)) < DAY"
-                class="self-end bg-red-600 py-1 px-2 font-bold text-white text-xs rounded-tr rounded-bl"
-            >
-                Aujourd'hui
+            <div class="flex flex-row justify-between">
+                <flag
+                    :iso="getLangFromUrl(chapter.teams, chapter.url[0])"
+                    class="rounded-full self-start m-1"
+                />
+                <div
+                    v-if="(new Date - new Date(chapter.date)) < DAY"
+                    class="self-end bg-red-600 py-1 px-2 font-bold text-white text-xs rounded-tr rounded-bl"
+                >
+                    Aujourd'hui
+                </div>
             </div>
             <div class="flex ml-2 mt-auto">
                 <div class="mb-1 self-end">
@@ -74,6 +84,7 @@
 </template>
 
 <script>
+import { parseDomain, fromUrl } from 'parse-domain';
 import { mapGetters } from 'vuex'
 import LikeButton from '../components/LikeButton.vue'
 
@@ -98,6 +109,26 @@ export default {
     methods: {
         toggleTeams: function() {
             this.teamsClicked = !this.teamsClicked;
+        },
+        getTeamFromUrl: function(teams, url) {
+            let idx = teams.findIndex(function(team) {
+                let domain = parseDomain(fromUrl(team.url));
+                let cleaned_domain = domain.domain + '.' + domain.topLevelDomains.join('.');
+                return url.includes(cleaned_domain);
+            });
+            if (idx === -1)
+                return '';
+            return teams[idx].name;
+        },
+        getLangFromUrl: function(teams, url) {
+            let idx = teams.findIndex(function(team) {
+                let domain = parseDomain(fromUrl(team.url));
+                let cleaned_domain = domain.domain + '.' + domain.topLevelDomains.join('.');
+                return url.includes(cleaned_domain);
+            });
+            if (idx === -1)
+                return '';
+            return teams[idx].langage;
         }
     }
 }
