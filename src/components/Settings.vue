@@ -1,7 +1,11 @@
 <template>
     <div>
         <input id="settings-collapsible" class="toggle hidden" type=checkbox>
-        <label for="settings-collapsible" class="label-toggle relative text-center text-gray-300 hover:text-white cursor-pointer font-medium text-lg xl:text-xl">Filtres</label>
+        <label for="settings-collapsible" class="label-toggle relative text-center text-gray-300 hover:text-white cursor-pointer font-medium text-lg xl:text-xl">
+            Filtres
+            <span class="toggle-plus text-xl ml-1 text-yellow-400">+</span>
+            <span class="toggle-minus text-xl ml-1 text-yellow-400 hidden">-</span>
+        </label>
         <div class="settings-container max-h-0 overflow-hidden xl:mt-4 ml-4 xl:ml-8">
             <div class="settings">
                 <div class="settings-langages mb-2">
@@ -117,6 +121,14 @@ export default {
             opacity: 1;
         }
     }
+}
+
+.toggle:checked + .label-toggle .toggle-plus {
+    display: none;
+}
+
+.toggle:checked + .label-toggle .toggle-minus {
+    display: inline;
 }
 
 .custom-box:hover .checkmark {
