@@ -1,4 +1,8 @@
 # FuckJapscan
+This repository is the front-end part of the https://fuckjapscan.com/ website.
+Feel free to ask for new features or bug fixes.
+
+You can also freely use my code for your usage.
 
 ## Project setup
 ```
