@@ -16,7 +16,7 @@
                             <input
                                 value="fr"
                                 v-model="selectedLangages"
-                                @change="updateSettings"
+                                @change="updateLangage"
                                 class="hidden"
                                 type="checkbox"
                             >
@@ -27,7 +27,7 @@
                             <input
                                 value="us"
                                 v-model="selectedLangages"
-                                @change="updateSettings"
+                                @change="updateLangage"
                                 class="hidden"
                                 type="checkbox"
                             >
@@ -47,7 +47,7 @@
                             <input
                                 :value="team.name"
                                 v-model="selectedTeams"
-                                @change="updateSettings"
+                                @change="updateTeam"
                                 class="hidden"
                                 type="checkbox"
                             >
@@ -77,15 +77,18 @@ export default {
         this.$emit('langages', this.selectedLangages)
     },
     methods: {
-        updateSettings: function() {
-            this.$emit('langages', this.selectedLangages)
-            this.$emit('teams', this.selectedTeams)
+        updateLangage: function() {
+            this.$emit('langages', this.selectedLangages);
+        },
+        updateTeam: function() {
+            this.$emit('teams', this.selectedTeams);
         }
     },
     watch: {
         teams: function() {
+            this.selectedTeams = [];
             this.teams.forEach((team) => this.selectedTeams.push(team.name));
-            this.$emit('teams', this.selectedTeams)
+            this.$emit('teams', this.selectedTeams);
         }
     }
 }
