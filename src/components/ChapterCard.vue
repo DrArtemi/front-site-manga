@@ -117,7 +117,7 @@ export default {
                 return url.includes(cleaned_domain);
             });
             if (idx === -1)
-                return '';
+                return parseDomain(fromUrl(url)).domain;
             return teams[idx].name;
         },
         getLangFromUrl: function(teams, url) {

@@ -19,7 +19,7 @@
                 <a
                     v-for="(url, idx) in manga.url"
                     :key="getTeamFromUrl(manga.teams, url)"
-                    :href="manga.url[idx]" target="_blank"
+                    :href="url" target="_blank"
                     class="text-white bg-black hover:bg-opacity-100 bg-opacity-90 w-4/5 mb-1 p-2 rounded text-center text-sm"
                     :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == manga.url.length - 1}"
                 >
@@ -96,7 +96,7 @@ export default {
                 return url.includes(cleaned_domain);
             });
             if (idx === -1)
-                return '';
+                return parseDomain(fromUrl(url)).domain;
             return teams[idx].name;
         },
         getLangFromUrl: function(teams, url) {
