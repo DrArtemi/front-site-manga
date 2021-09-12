@@ -30,7 +30,7 @@
                     :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == chapter.url.length - 1}"
                 >
                     <flag
-                        :iso="getLangFromUrl(chapter.teams, chapter.url[0])"
+                        :iso="getLangFromUrl(chapter.teams, url)"
                         class="rounded-full mr-1"
                     />
                     {{ getTeamFromUrl(chapter.teams, url) }}

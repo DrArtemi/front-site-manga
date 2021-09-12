@@ -24,7 +24,7 @@
                     :class="{ 'mt-auto': idx == 0, 'mb-auto': idx == manga.url.length - 1}"
                 >
                     <flag
-                        :iso="getLangFromUrl(manga.teams, manga.url[0])"
+                        :iso="getLangFromUrl(manga.teams, url)"
                         class="rounded-full mr-1"
                     />
                     {{ getTeamFromUrl(manga.teams, url) }}
